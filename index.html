@@ -4,53 +4,51 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Homework 4 - Law of Large Numbers Simulation</title>
-  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="style_v2.css" />
 </head>
 <body>
   <header>
-    <h2 class="student-info">Shefik Memedi — Homework 4</h2>
-    <h3 class="question">
-      V. Simulate the Law of Large Numbers (LLN) by plotting multiple (m) trajectories of (n) trials for the relative frequency f(n). 
-      Show with a histogram (possibly, a vertically oriented histogram placed on the right side of the main chart) how, as soon as n becomes large, 
-      the empirical distribution of f(n) (over all m trajectories) tends to the underlying probability p of success used in each trial.
-    </h3>
+    <h2>Shefik Memedi — Homework 4</h2>
+    <p class="question">
+      V. Simulate the Law of Large Numbers (LLN) by plotting multiple (m) trajectories of (n) trials for the relative frequency f(n).
+      Show with a histogram (possibly, a vertically oriented histogram placed on the right side of the main chart)
+      how, as soon as n becomes large, the empirical distribution of f(n) (over all m trajectories)
+      tends to the underlying probability p of success used in each trial.
+    </p>
   </header>
 
-  <h1>Exploring the Law of Large Numbers in Action</h1>
-  <p class="subtitle">
-    Watch how the relative frequency stabilizes near the true probability as the number of trials grows.
-  </p>
-
-  <div class="controls">
-    <label>Probability (p): 
-      <input id="probInput" type="number" value="0.5" step="0.1" min="0" max="1" />
-    </label>
-    <label>Trials (n): 
-      <input id="nInput" type="number" value="500" />
-    </label>
-    <label>Simulations (m): 
-      <input id="mInput" type="number" value="50" />
-    </label>
-    <button id="runButton">Run</button>
-  </div>
-
-  <div class="chart-container">
-    <canvas id="lineChart"></canvas>
-    <canvas id="histChart"></canvas>
-  </div>
-
-  <p id="avgResult" class="result-text"></p>
-
-  <section class="explanation">
-    <h2>What You’re Seeing</h2>
-    <p>
-      Each line represents one simulated sequence of outcomes where an event with probability <b>p</b> occurs repeatedly. 
-      As the number of trials increases, the average frequency of successes (blue lines) begins to cluster around the true probability (gold line). 
-      This illustrates the <b>Law of Large Numbers</b>, which tells us that with enough observations, the experimental probability approaches the theoretical one.
+  <main>
+    <h1>Exploring the Law of Large Numbers in Action</h1>
+    <p class="subtitle">
+      Watch how the relative frequency stabilizes near the true probability as the number of trials grows.
     </p>
-  </section>
 
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  <script src="script.js"></script>
+    <div class="controls">
+      <label>Probability (p): <input id="probInput" type="number" value="0.5" step="0.1" min="0" max="1" /></label>
+      <label>Trials (n): <input id="nInput" type="number" value="500" /></label>
+      <label>Simulations (m): <input id="mInput" type="number" value="50" /></label>
+      <button onclick="startSimulation()">Run</button>
+    </div>
+
+    <div class="canvas-container">
+      <canvas id="mainChart" width="800" height="400"></canvas>
+      <canvas id="histogram" width="200" height="400"></canvas>
+    </div>
+
+    <p id="average-result"></p>
+
+    <section class="explanation">
+      <h3>Simple Explanation</h3>
+      <p>
+        Each line represents one simulated sequence of outcomes where an event with probability <i>p</i> occurs repeatedly.
+        As the number of trials increases, the average frequency of successes (blue lines)
+        begins to cluster around the true probability (gold line).
+        This demonstrates the <strong>Law of Large Numbers</strong>,
+        which shows that with enough observations, the experimental probability approaches the theoretical one.
+      </p>
+    </section>
+  </main>
+
+  <script src="lln_v2.js"></script>
 </body>
 </html>
