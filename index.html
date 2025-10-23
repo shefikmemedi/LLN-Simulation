@@ -3,39 +3,37 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Exploring the Law of Large Numbers</title>
-  <link rel="stylesheet" href="style.css" />
+  <title>Exploring the Law of Large Numbers in Action</title>
+  <link rel="stylesheet" href="style_v2.css" />
 </head>
 <body>
   <h1>Exploring the Law of Large Numbers in Action</h1>
-  <p class="subtitle">
-    Watch how the relative frequency stabilizes near the true probability as the number of trials grows.
-  </p>
+  <p>Watch how the relative frequency stabilizes near the true probability as the number of trials grows.</p>
 
   <div class="controls">
-    <label>Probability (p): <input id="probInput" type="number" value="0.5" step="0.1" min="0" max="1" /></label>
-    <label>Trials (n): <input id="nInput" type="number" value="500" /></label>
-    <label>Simulations (m): <input id="mInput" type="number" value="50" /></label>
-    <button onclick="startSimulation()">Run</button>
+    <label>Probability (p): <input type="number" id="prob" value="0.5" min="0" max="1" step="0.1"></label>
+    <label>Trials (n): <input type="number" id="trials" value="500"></label>
+    <label>Simulations (m): <input type="number" id="sims" value="50"></label>
+    <button id="run">Run</button>
   </div>
 
   <div class="canvas-container">
-    <canvas id="mainChart" width="800" height="400"></canvas>
-    <canvas id="histogram" width="200" height="400"></canvas>
+    <canvas id="chart" width="700" height="400"></canvas>
+    <canvas id="hist" width="200" height="400"></canvas>
   </div>
 
-  <p id="average-result"></p>
+  <p id="avg"></p>
 
-  <div class="explanation">
+  <section id="explanation">
     <h2>What You’re Seeing</h2>
     <p>
-      Each line represents one simulated sequence of outcomes where an event with probability <em>p</em> occurs
-      repeatedly. As the number of trials increases, the average frequency of successes (blue lines) begins to
-      cluster around the true probability (gold line). This illustrates the <strong>Law of Large Numbers</strong>,
-      which tells us that with enough observations, the experimental probability approaches the theoretical one.
+      Each line represents one simulated sequence of outcomes where an event with probability p occurs repeatedly.
+      As the number of trials increases, the average frequency of successes (blue lines) begins to cluster around
+      the true probability (gold line). This illustrates the <b>Law of Large Numbers</b>, which tells us that with
+      enough observations, the experimental probability approaches the theoretical one.
     </p>
-  </div>
+  </section>
 
-  <script src="lln_script.js"></script>
+  <script src="lln_script_v2.js"></script>
 </body>
 </html>
