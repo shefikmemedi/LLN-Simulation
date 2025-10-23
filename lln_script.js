@@ -15,17 +15,18 @@ function drawMainChart(allData, p, N, ctx) {
 
   ctx.clearRect(0, 0, W, H);
 
-  // Draw reference line for p
+  // Gold line for p
   const y_p = H * (1 - p);
-  ctx.strokeStyle = "red";
+  ctx.strokeStyle = "#d4af37";
   ctx.lineWidth = 2;
   ctx.beginPath();
   ctx.moveTo(0, y_p);
   ctx.lineTo(W, y_p);
   ctx.stroke();
 
+  // Draw trajectories
   allData.forEach(traj => {
-    ctx.strokeStyle = "rgba(0,0,255,0.15)";
+    ctx.strokeStyle = "rgba(0,128,128,0.1)";
     ctx.beginPath();
     traj.forEach((f, i) => {
       const x = (i / N) * W;
@@ -42,13 +43,11 @@ function drawHistogram(finalValues, p, ctx) {
 
   ctx.clearRect(0, 0, W, H);
   const bins = 20;
-  const min = 0;
-  const max = 1;
-  const step = (max - min) / bins;
+  const step = 1 / bins;
   const counts = new Array(bins).fill(0);
 
   finalValues.forEach(v => {
-    let index = Math.floor((v - min) / step);
+    let index = Math.floor(v / step);
     if (index >= bins) index = bins - 1;
     counts[index]++;
   });
@@ -59,14 +58,14 @@ function drawHistogram(finalValues, p, ctx) {
   counts.forEach((count, i) => {
     const width = (count / maxCount) * W;
     const y = H - (i + 1) * barHeight;
-    ctx.fillStyle = "steelblue";
-    ctx.fillRect(0, y, width, barHeight - 1);
+    ctx.fillStyle = "rgba(0,128,128,0.7)";
+    ctx.fillRect(0, y, width, barHeight - 2);
   });
 
-  // Draw red line for p
-  const pIndex = Math.floor((p - min) / step);
+  // Draw gold line for p
+  const pIndex = Math.floor(p / step);
   const pY = H - (pIndex + 0.5) * barHeight;
-  ctx.strokeStyle = "red";
+  ctx.strokeStyle = "#d4af37";
   ctx.beginPath();
   ctx.moveTo(0, pY);
   ctx.lineTo(W, pY);
@@ -95,8 +94,7 @@ function startSimulation() {
 
   const avg = finals.reduce((a, b) => a + b, 0) / M;
   document.getElementById("average-result").innerHTML =
-    `Average Final Frequency f(N): <b>${avg.toFixed(4)}</b> (Target p = ${p})`;
+    `Average Final Frequency f(N): <span style="color:#008080;">${avg.toFixed(4)}</span> (Target p = ${p})`;
 }
 
-// Auto-run when page loads
-window.onload = startSimulation;
+window.addEventListener("DOMContentLoaded", startSimulation);
