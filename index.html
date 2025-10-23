@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Law of Large Numbers (LLN) Simulation</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <h1>Law of Large Numbers (LLN) Simulation</h1>
+  <p>
+    Visualizing how the relative frequency f(n) converges to the true probability p as n increases.
+  </p>
+
+  <div class="controls">
+    <label>Target Probability (p): <input id="probInput" type="number" value="0.5" step="0.1" min="0" max="1" /></label>
+    <label>Total Trials (n): <input id="nInput" type="number" value="500" /></label>
+    <label>Trajectories (m): <input id="mInput" type="number" value="50" /></label>
+    <button onclick="startSimulation()">Run Simulation</button>
+  </div>
+
+  <div class="canvas-container">
+    <canvas id="mainChart" width="800" height="400"></canvas>
+    <canvas id="histogram" width="200" height="400"></canvas>
+  </div>
+
+  <p id="average-result"></p>
+
+  <script src="lln_script.js"></script>
+</body>
+</html>
