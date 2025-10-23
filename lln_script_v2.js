@@ -1,114 +1,103 @@
-const lineCanvas = document.getElementById("lineChart");
-const histCanvas = document.getElementById("histChart");
-const probInput = document.getElementById("probInput");
-const nInput = document.getElementById("nInput");
-const mInput = document.getElementById("mInput");
-const avgResult = document.getElementById("avgResult");
-const runButton = document.getElementById("runButton");
+function runTrajectory(p, N) {
+  let successes = 0;
+  const data = [];
 
-let lineChart, histChart;
-
-runButton.addEventListener("click", () => {
-  const p = parseFloat(probInput.value);
-  const n = parseInt(nInput.value);
-  const m = parseInt(mInput.value);
-
-  simulateLLN(p, n, m);
-});
-
-function simulateLLN(p, n, m) {
-  const trajectories = [];
-  const finalFrequencies = [];
-
-  for (let i = 0; i < m; i++) {
-    let successes = 0;
-    const freq = [];
-    for (let j = 1; j <= n; j++) {
-      if (Math.random() < p) successes++;
-      freq.push(successes / j);
-    }
-    trajectories.push(freq);
-    finalFrequencies.push(freq[freq.length - 1]);
+  for (let n = 1; n <= N; n++) {
+    if (Math.random() < p) successes++;
+    data.push(successes / n);
   }
-
-  const avgFinal = (
-    finalFrequencies.reduce((a, b) => a + b, 0) / finalFrequencies.length
-  ).toFixed(4);
-
-  avgResult.innerHTML = `Average Final Frequency f(N): ${avgFinal} (Target p = ${p})`;
-
-  drawLineChart(trajectories, p);
-  drawHistogram(finalFrequencies, p);
+  return data;
 }
 
-function drawLineChart(trajectories, p) {
-  if (lineChart) lineChart.destroy();
-  const n = trajectories[0].length;
-  const labels = Array.from({ length: n }, (_, i) => i + 1);
+function drawMainChart(allData, p, N, ctx) {
+  const W = ctx.canvas.width;
+  const H = ctx.canvas.height;
 
-  lineChart = new Chart(lineCanvas, {
-    type: "line",
-    data: {
-      labels,
-      datasets: trajectories.map(traj => ({
-        data: traj,
-        borderColor: "rgba(37, 99, 235, 0.3)",
-        borderWidth: 1,
-        fill: false,
-        tension: 0.1
-      })).concat({
-        label: "True Probability",
-        data: Array(n).fill(p),
-        borderColor: "#f59e0b",
-        borderWidth: 2,
-        borderDash: [5, 5],
-        fill: false
-      })
-    },
-    options: {
-      plugins: { legend: { display: false } },
-      scales: {
-        x: { title: { display: true, text: "Number of Trials (n)" } },
-        y: { title: { display: true, text: "Relative Frequency f(n)" }, min: 0, max: 1 }
-      }
-    }
+  ctx.clearRect(0, 0, W, H);
+
+  // gold reference line for p
+  const y_p = H * (1 - p);
+  ctx.strokeStyle = "#d4af37";
+  ctx.lineWidth = 2;
+  ctx.beginPath();
+  ctx.moveTo(0, y_p);
+  ctx.lineTo(W, y_p);
+  ctx.stroke();
+
+  allData.forEach(traj => {
+    ctx.strokeStyle = "rgba(0, 128, 255, 0.25)";
+    ctx.beginPath();
+    traj.forEach((f, i) => {
+      const x = (i / N) * W;
+      const y = H * (1 - f);
+      if (i === 0) ctx.moveTo(x, y);
+      else ctx.lineTo(x, y);
+    });
+    ctx.stroke();
   });
 }
 
-function drawHistogram(values, p) {
-  if (histChart) histChart.destroy();
+function drawHistogram(finalValues, p, ctx) {
+  const W = ctx.canvas.width;
+  const H = ctx.canvas.height;
 
-  const bins = 15;
+  ctx.clearRect(0, 0, W, H);
+  const bins = 20;
   const min = 0;
   const max = 1;
-  const binWidth = (max - min) / bins;
+  const step = (max - min) / bins;
   const counts = new Array(bins).fill(0);
 
-  values.forEach(v => {
-    const idx = Math.min(Math.floor((v - min) / binWidth), bins - 1);
-    counts[idx]++;
+  finalValues.forEach(v => {
+    let index = Math.floor((v - min) / step);
+    if (index >= bins) index = bins - 1;
+    counts[index]++;
   });
 
-  const labels = counts.map((_, i) =>
-    (min + i * binWidth + binWidth / 2).toFixed(2)
-  );
+  const maxCount = Math.max(...counts);
+  const barWidth = W / bins;
 
-  histChart = new Chart(histCanvas, {
-    type: "bar",
-    data: {
-      labels,
-      datasets: [{
-        data: counts,
-        backgroundColor: "rgba(37, 99, 235, 0.6)"
-      }]
-    },
-    options: {
-      indexAxis: "y",
-      plugins: { legend: { display: false } },
-      scales: {
-        x: { title: { display: true, text: "Count" } },
-        y: { title: { display: true, text: "Final Frequencies" } }
-      }
-    }
+  counts.forEach((count, i) => {
+    const height = (count / maxCount) * H;
+    const x = i * barWidth;
+    const y = H - height;
+    ctx.fillStyle = "#009688";
+    ctx.fillRect(x, y, barWidth - 2, height);
   });
+
+  // gold reference line for p
+  const pIndex = Math.floor((p - min) / step);
+  const pX = pIndex * barWidth + barWidth / 2;
+  ctx.strokeStyle = "#d4af37";
+  ctx.beginPath();
+  ctx.moveTo(pX, 0);
+  ctx.lineTo(pX, H);
+  ctx.stroke();
 }
+
+function startSimulation() {
+  const p = parseFloat(document.getElementById("probInput").value);
+  const N = parseInt(document.getElementById("nInput").value);
+  const M = parseInt(document.getElementById("mInput").value);
+
+  const mainCtx = document.getElementById("mainChart").getContext("2d");
+  const histCtx = document.getElementById("histogram").getContext("2d");
+
+  const allData = [];
+  const finals = [];
+
+  for (let i = 0; i < M; i++) {
+    const traj = runTrajectory(p, N);
+    allData.push(traj);
+    finals.push(traj[N - 1]);
+  }
+
+  drawMainChart(allData, p, N, mainCtx);
+  drawHistogram(finals, p, histCtx);
+
+  const avg = finals.reduce((a, b) => a + b, 0) / M;
+  document.getElementById("average-result").innerHTML =
+    `Average Final Frequency f(N): <b>${avg.toFixed(4)}</b> (Target p = ${p})`;
+}
+
+window.onload = startSimulation;
