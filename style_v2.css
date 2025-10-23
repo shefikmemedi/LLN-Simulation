@@ -1,90 +1,100 @@
 body {
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background-color: #f8fafc;
-  color: #1e293b;
-  margin: 30px;
+  font-family: "Inter", Arial, sans-serif;
+  background-color: #f7fafc;
+  color: #222;
+  margin: 0;
+  padding: 0;
   text-align: center;
 }
 
-.student-info {
-  color: #0d47a1;
-  margin-bottom: 8px;
+header {
+  background: #ffffff;
+  padding: 1.5em;
+  border-bottom: 2px solid #e0e0e0;
 }
 
-.question {
-  font-size: 15px;
-  font-weight: normal;
-  color: #374151;
-  margin-bottom: 30px;
+header h2 {
+  color: #004d66;
+  margin-bottom: 0.5em;
+}
+
+header .question {
+  max-width: 900px;
+  margin: 0 auto;
+  font-size: 0.95em;
+  color: #333;
   line-height: 1.5;
 }
 
 h1 {
-  color: #0f52ba;
-  margin-bottom: 10px;
+  color: #006d77;
+  margin-top: 1.2em;
 }
 
 .subtitle {
-  color: #334155;
-  font-size: 16px;
-  margin-bottom: 20px;
+  color: #555;
+  margin-bottom: 1.5em;
 }
 
 .controls {
-  margin-bottom: 25px;
+  margin-bottom: 1.5em;
 }
 
-label {
-  margin: 0 10px;
+.controls label {
+  margin: 0 0.8em;
 }
 
 button {
-  background-color: #2563eb;
+  background-color: #009688;
   color: white;
   border: none;
-  padding: 8px 18px;
+  padding: 0.4em 1em;
   border-radius: 6px;
   cursor: pointer;
-  font-size: 14px;
-  transition: 0.2s;
+  font-weight: 600;
 }
 
 button:hover {
-  background-color: #1e40af;
+  background-color: #00796b;
 }
 
-.chart-container {
+.canvas-container {
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 30px;
-  margin-bottom: 20px;
-  flex-wrap: wrap;
+  gap: 1em;
+  margin-bottom: 1em;
 }
 
-#lineChart, #histChart {
+#mainChart,
+#histogram {
   background-color: #ffffff;
-  border-radius: 12px;
-  padding: 15px;
-  max-width: 600px;
-  width: 100%;
+  border-radius: 10px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
 }
 
-.result-text {
-  font-size: 17px;
-  color: #0f172a;
-  margin-bottom: 30px;
+#average-result {
+  font-weight: bold;
+  margin-bottom: 2em;
 }
 
 .explanation {
-  max-width: 700px;
-  margin: auto;
-  text-align: justify;
-  font-size: 17px;
-  line-height: 1.7;
+  max-width: 800px;
+  margin: 0 auto 3em auto;
+  background: #ffffff;
+  padding: 1.5em;
+  border-radius: 10px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.08);
 }
 
-.explanation h2 {
-  text-align: center;
-  color: #0d47a1;
+.explanation h3 {
+  color: #222;
+  font-size: 1.3em;
+  margin-bottom: 0.5em;
+}
+
+.explanation p {
+  font-size: 1em;
+  color: #333;
+  line-height: 1.6;
 }
