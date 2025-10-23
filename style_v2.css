@@ -1,22 +1,37 @@
 body {
-  font-family: "Helvetica Neue", Arial, sans-serif;
-  background-color: #f8f9fa;
-  color: #222;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f8fafc;
+  color: #1e293b;
+  margin: 30px;
   text-align: center;
-  padding: 20px;
+}
+
+.student-info {
+  color: #0d47a1;
+  margin-bottom: 8px;
+}
+
+.question {
+  font-size: 15px;
+  font-weight: normal;
+  color: #374151;
+  margin-bottom: 30px;
+  line-height: 1.5;
 }
 
 h1 {
-  color: #006d77; /* teal headline */
+  color: #0f52ba;
+  margin-bottom: 10px;
 }
 
-p {
-  color: #444;
-  font-size: 1.05em;
+.subtitle {
+  color: #334155;
+  font-size: 16px;
+  margin-bottom: 20px;
 }
 
 .controls {
-  margin: 20px 0;
+  margin-bottom: 25px;
 }
 
 label {
@@ -24,35 +39,52 @@ label {
 }
 
 button {
-  background-color: #83c5be;
-  color: #073b4c;
-  padding: 8px 16px;
+  background-color: #2563eb;
+  color: white;
   border: none;
+  padding: 8px 18px;
   border-radius: 6px;
   cursor: pointer;
-  font-size: 1em;
+  font-size: 14px;
+  transition: 0.2s;
 }
 
 button:hover {
-  background-color: #006d77;
-  color: white;
+  background-color: #1e40af;
 }
 
-.canvas-container {
+.chart-container {
   display: flex;
   justify-content: center;
   align-items: center;
   gap: 30px;
-  margin: 20px 0;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
 }
 
-#avg {
-  font-weight: bold;
-  margin-top: 10px;
+#lineChart, #histChart {
+  background-color: #ffffff;
+  border-radius: 12px;
+  padding: 15px;
+  max-width: 600px;
+  width: 100%;
 }
 
-#explanation {
+.result-text {
+  font-size: 17px;
+  color: #0f172a;
+  margin-bottom: 30px;
+}
+
+.explanation {
   max-width: 700px;
-  margin: 40px auto;
-  text-align: left;
+  margin: auto;
+  text-align: justify;
+  font-size: 17px;
+  line-height: 1.7;
+}
+
+.explanation h2 {
+  text-align: center;
+  color: #0d47a1;
 }
